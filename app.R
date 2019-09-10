@@ -20,12 +20,12 @@ ui <- fluidPage(
       # Input: Decimal interval with step value ----
       sliderInput("mean", "Mean:",
                   min = -1, max = 1,
-                  value = 0.5, step = 0.01),
+                  value = -0.44, step = 0.01),
       
       # Input: Specification of range within an interval ----
       sliderInput("sd", "SD:",
                   min = 0, max = 1,
-                  value = 0.5, step = 0.01),
+                  value = 0.24, step = 0.01),
       
       
       
