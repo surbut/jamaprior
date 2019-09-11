@@ -130,26 +130,23 @@ server <- function(input, output) {
     
     
     p1=input$pi
-    pm=post_mean(priormean = 0,priorsd = 0.01,datamean = dm,datase = dse)
-    ps=sqrt(post_var(priorsd = 0.01,datase =dse))
+  
     p=pipost(p1,dataSE=dse,datamean=dm,priorsd=priorsd)###computer posterior weight on nonzero component using chosen prior weight
     s=rbinom(n = sim,size=1,prob=p)##create a list indexing whether comes from null or real depending on posterior weight, where for each simulation, an RV (0,1) is simulated from Binomial(n=1,size=1) according to posterio weight
-    pm=sapply(s,function(s){post_mean(priormean=0,priorsd=s*1,datamean=dm,datase=dse)})##depending on whether null or alternative chosen, simulate posterior mean of distribution
+    pm=sapply(s,function(s){post_mean(priormean=0,priorsd=s*priorsd,datamean=dm,datase=dse)})##depending on whether null or alternative chosen, simulate posterior mean of distribution
     ps=sqrt(sapply(s,function(s){post_var(priorsd=s*1,datase=dse)}))#
     b=sapply(seq(1:length(pm)),function(x){rnorm(1,mean = pm[x],sd=ps[x])})
     
-    
-    
-    
+   
 
     plot(density(priov),
           col="red",
           lwd=2,ylim=c(0,5),xlim=c(-2,2));
-  
+
     lines(density(b),
           col="blue",
           lwd=2) 
-    legend(x=0.5,y=2,legend = c("Prior","Posterior"),col=c("red","blue"))
+    legend(x=0.5,y=2,legend = c("Prior","Posterior"),col=c("red","blue"),lty=c(1,1),lwd=c(1,1))
     
     
   })
