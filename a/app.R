@@ -138,35 +138,14 @@ server <- function(input, output) {
     ps=sqrt(sapply(s,function(s){post_var(priorsd=s*1,datase=dse)}))#
     b=sapply(seq(1:length(pm)),function(x){rnorm(1,mean = pm[x],sd=ps[x])})
     
-    polyCurve <- function(x, y, from, to, n = 50, miny,
-                          col = "grey", border = col) {
-      drawPoly <- function(fun, from, to, n = 50, miny, col, border) {
-        Sq <- seq(from = from, to = to, length = n)
-        polygon(x = c(Sq[1], Sq, Sq[n]),
-                y = c(miny, fun(Sq), miny),
-                col = col, border = border)
-      }
-      lf <- length(from)
-      stopifnot(identical(lf, length(to)))
-      if(length(col) != lf)
-        col <- rep(col, length.out = lf)
-      if(length(border) != lf)
-        border <- rep(border, length.out = lf)
-      if(missing(miny))
-        miny <- min(y)
-      interp <- approxfun(x = x, y = y)
-      mapply(drawPoly, from = from, to = to, col = col, border = border,
-             MoreArgs = list(fun = interp, n = n, miny = miny))
-      invisible()
-    }
+    
     
     
 
     plot(density(priov),
           col="red",
           lwd=2,ylim=c(0,5),xlim=c(-2,2));
-    abline(v=CI_low,lty=1)
-    abline(v=CI_up,lty=1)
+  
     lines(density(b),
           col="blue",
           lwd=2) 
